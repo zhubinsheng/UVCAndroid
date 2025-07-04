@@ -27,19 +27,19 @@ plugins {
 
 android {
     namespace 'com.serenegiant.uvccamera'
-    compileSdkVersion versionCompiler
+    compileSdk 34
 
     compileOptions {
-        sourceCompatibility javaSourceCompatibility
-        targetCompatibility javaTargetCompatibility
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
-        minSdkVersion versionMin
-        targetSdkVersion versionTarget
+        minSdk 30
+        targetSdk 30
 
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+            abiFilters 'arm64-v8a'
         }
     }
 
@@ -68,7 +68,7 @@ dependencies {
 
     implementation 'androidx.core:core:1.13.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.annotation:annotation:1.8.0'
     implementation 'cn.hutool:hutool-core:5.8.35'
 }
@@ -87,4 +87,4 @@ ext {
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
 }
 
-apply from: "../publish_aar.gradle"
+//apply from: "../publish_aar.gradle"

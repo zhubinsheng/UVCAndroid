@@ -41,6 +41,11 @@ public class MediaVideoBufferEncoderHelper {
 
     private final IFrameCallback mIFrameCallback = new IFrameCallback() {
         @Override
+        public void onFrame(byte[] frame) {
+
+        }
+
+        /*@Override
         public void onFrame(final ByteBuffer frame) {
 //            if (DEBUG) Log.v(TAG, "onFrame:" + frame);
             final MediaVideoBufferEncoder videoEncoder;
@@ -51,7 +56,7 @@ public class MediaVideoBufferEncoderHelper {
                 videoEncoder.frameAvailableSoon();
                 videoEncoder.encode(frame);
             }
-        }
+        }*/
     };
     public static final int PIXEL_FORMAT = UVCCamera.PIXEL_FORMAT_NV12;
 

@@ -253,7 +253,7 @@ int UVCPreview::setFrameCallback(JNIEnv *env, jobject frame_callback_obj, int pi
                 if (LIKELY(clazz)) {
                     iframecallback_fields.onFrame = env->GetMethodID(clazz,
                                                                      "onFrame",
-                                                                     "(Ljava/nio/ByteBuffer;)V");
+                                                                     "([B)V");
                 } else {
                     LOGW("failed to get object class");
                 }
@@ -866,7 +866,8 @@ void UVCPreview::do_capture_callback(JNIEnv *env, uvc_frame_t *frame) {
                     goto SKIP;
                 }
             }
-            jobject buf = env->NewDirectByteBuffer(callback_frame->data, callbackPixelBytes);
+            jbyteArray buf = env->NewByteArray(callbackPixelBytes);
+            env->SetByteArrayRegion(buf, 0, callbackPixelBytes, (jbyte*)callback_frame->data);
             env->CallVoidMethod(mFrameCallbackObj, iframecallback_fields.onFrame, buf);
             env->ExceptionClear();
             env->DeleteLocalRef(buf);

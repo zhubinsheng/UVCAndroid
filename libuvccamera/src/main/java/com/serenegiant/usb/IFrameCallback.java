@@ -43,5 +43,5 @@ public interface IFrameCallback {
      *
      * @param frame this is direct ByteBuffer from JNI layer and you should handle it's byte order and limitation.
      */
-    void onFrame(ByteBuffer frame);
+    void onFrame(byte[] frame);
 }
