@@ -66,7 +66,7 @@ public final class USBMonitor {
     /**
      * check device interval 150ms
      */
-    private static final int CHECK_DEVICE_RUNNABLE_DELAY = 150;
+    private static final int CHECK_DEVICE_RUNNABLE_DELAY = 2500;
 
     private static final String ACTION_USB_PERMISSION_BASE = "com.serenegiant.USB_PERMISSION.";
     private final String ACTION_USB_PERMISSION = ACTION_USB_PERMISSION_BASE + hashCode();
