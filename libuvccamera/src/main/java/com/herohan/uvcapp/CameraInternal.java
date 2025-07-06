@@ -50,7 +50,6 @@ final class CameraInternal implements ICameraInternal {
     private final List<StateCallback> mCallbacks = new ArrayList<>();
 
     private IImageCapture mImageCapture;
-    private VideoCapture mVideoCapture;
 
     public CameraInternal(final Context context, final UsbControlBlock ctrlBlock, final int vid, final int pid) {
         if (DEBUG) Log.d(TAG, "Constructor:");
@@ -127,7 +126,6 @@ final class CameraInternal implements ICameraInternal {
             mUVCCamera.setPreviewSize(size);
 
             // Preview size may changed, so set the resolution and reinitialize video encoder and audio encoder of VideoCapture
-            mVideoCapture.setResolution(getPreviewSize());
         } catch (final Exception e) {
             Log.e(TAG, "setPreviewSize:", e);
             // unexpectedly #setPreviewSize failed
@@ -235,7 +233,6 @@ final class CameraInternal implements ICameraInternal {
             setPreviewConfig(previewConfig);
 
             createImageCapture(imageCaptureConfig);
-            mVideoCapture = new VideoCapture(mRendererHolder, videoCaptureConfig, getPreviewSize());
 
             processOnCameraOpen();
         } catch (Exception e) {
@@ -288,10 +285,7 @@ final class CameraInternal implements ICameraInternal {
             mImageCapture.release();
             mImageCapture = null;
         }
-        if (mVideoCapture != null) {
-            mVideoCapture.release();
-            mVideoCapture = null;
-        }
+
     }
 
     @Override
@@ -354,24 +348,17 @@ final class CameraInternal implements ICameraInternal {
 
     @Override
     public boolean isRecording() {
-        return mVideoCapture != null && mVideoCapture.isRecording();
+        return false;
     }
 
     @Override
     public void startRecording(VideoCapture.OutputFileOptions options, VideoCapture.OnVideoCaptureCallback callback) {
-        if (isCameraOpened() && mVideoCapture != null) {
-            mVideoCapture.startRecording(options, callback);
-        } else {
-            String message = "Not bound to a Camera";
-            callback.onError(VideoCapture.ERROR_INVALID_CAMERA, message, new IllegalStateException(message));
-        }
+
     }
 
     @Override
     public void stopRecording() {
-        if (mVideoCapture != null) {
-            mVideoCapture.stopRecording();
-        }
+
     }
 
     @Override
@@ -416,9 +403,7 @@ final class CameraInternal implements ICameraInternal {
     public void setVideoCaptureConfig(VideoCaptureConfig config) {
         if (DEBUG) Log.d(TAG, "setVideoCaptureConfig:");
 
-        if (mVideoCapture != null) {
-            mVideoCapture.setConfig(config);
-        }
+
     }
 
     private void releaseResource() {
